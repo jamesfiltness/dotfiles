@@ -1,0 +1,73 @@
+# Path to your oh-my-zsh installation.
+export ZSH=/Users/jamesfiltness/.oh-my-zsh
+
+# Check for updates every day instead of every 2 weeks.
+export UPDATE_ZSH_DAYS=1
+
+# Default Node version.
+export NODE_VERSION=6
+
+# Stash environment variables in ~/.localrc.
+if [[ -a ~/.localrc ]]
+then
+  source ~/.localrc
+fi
+
+# Load theme.
+ZSH_THEME="jfiltness"
+
+# Show timestamp in history in this format.
+HIST_STAMPS="mm/dd/yyyy"
+
+# Display completion dots.
+COMPLETION_WAITING_DOTS="true"
+
+# Load Oh My Zsh plugins.
+plugins=(node npm brew osx sudo colorize)
+
+source $ZSH/oh-my-zsh.sh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Separate history for each session
+unsetopt share_history
+
+# Add Homebrew utils to path so they can be used with their real names instead
+# of having to include prefixes.
+PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+MANPATH="/usr/local/man:$MANPATH"
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
+MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
+PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
+MANPATH="/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
+
+# Source nvm.
+export NVM_DIR="$HOME/.nvm"
+. "$(brew --prefix nvm)/nvm.sh"
+nvm use $NODE_VERSION
+
+# Custom aliases
+
+# grc overides for ls
+# Made possible through contributions from generous benefactors like
+# `brew install coreutils`
+if $(gls &>/dev/null)
+then
+  alias l="gls -lF --color"
+  alias la="gls -lFAh --color"
+fi
+
+# Git aliases - most frequently used commands aliased
+alias ga='git add'
+alias gaa='git add .'
+alias gc='git commit -m'
+alias gca='git commit --amend'
+alias gp='git push'
+alias gpf='git push --force'
+alias gf='git fetch'
+alias gpp='git pull'
+
+#zsh
+alias reload!='. ~/.zshrc'
+

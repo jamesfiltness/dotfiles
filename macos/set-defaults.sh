@@ -2,6 +2,12 @@
 
 # Lots borrowed from the legendary https://github.com/mathiasbynens/dotfiles/blob/master/.macos
 
+set -e
+
+# TODO:
+# Show home directory in finder
+# Prevent iterm dialog on close
+
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
