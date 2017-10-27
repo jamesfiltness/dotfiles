@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+cask_args appdir: '/Applications'
+
+tap 'homebrew/bundle'
 
 # Update out of date core utilities that ship with OSX
 brew install coreutils --with-default-names

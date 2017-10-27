@@ -1,42 +1,60 @@
 #!/usr/bin/env bash
 
-# Get the directory in which this script is executing
-cd "$(dirname "$0")"
-SCRIPT_ROOT=$(pwd -P)
-
 # Prompt for the admin password
 sudo -v
 
-echo "Setting up..."
+# is this ok?
+mkdir ~/dev
 
-# Check for Homebrew and install if we don't have it
-if test ! $(which brew); then
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-fi
+# Get the directory this script is running in
+cd "$(dirname "$0")/.."
+export DOTFILES_ROOT=$(pwd -P)
 
-# Update Homebrew recipes
-brew update
+info () {
+  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+}
 
-# Install software via Homebrew
-${SCRIPT_ROOT}/install-software
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
 
-# Set homebrew zsh as the default shell
-sudo -s 'echo /usr/local/bin/zsh >> /etc/shells' && chsh -s /usr/local/bin/zsh
+fail () {
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  echo ''
+  exit
+}
 
-# Install om-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+link_file () {
+  local src=$1 dst=$2
 
-# Make a dev directory
-mkdir dev
+  # Backup any files t
+  mv "$dst" "${dst}.backup"
+  success "Moved $dst to ${dst}.backup"
 
-# Copy dotfiles to home directory
-cp -r ${SCRIPT_ROOT}/_dotfiles/. ~/
+  # Symlink new files in
+  ln -s "$1" "$2"
+  success "Linked $1 to $2"
+}
 
-# Set up vim and install plugins
-vim +PluginInstall +qall
+# Symlink dotfiles in to ~
+install_dotfiles () {
+  info 'Installing dotfiles'
 
-# Set up osx preferences
-sudo ${SRIPT_ROOT}/osx-setup
+  for src in $(find -H "$SCRIPT_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*')
+  do
+    dst="$HOME/.$(basename "${src%.*}")"
+    link_file "$src" "$dst"
+  done
+}
 
-# Take some inspiration from this repo...
-# https://github.com/driesvints/dotfiles/tree/7cb1ea6eff77921d16a3376a2172f96425e93181
+install_dotfiles
+
+info "Installing dependencies"
+if source ${DOTFILES_ROOT}/bin/install | while read -r data; do info "$data"; done
+  then
+    success "Dependencies installed"
+  else
+    fail "Error installing dependencies"
+  fi
+
+success 'Installation complete!'
