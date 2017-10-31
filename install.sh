@@ -6,25 +6,24 @@ set -e
 # Prompt for admin password
 sudo -v
 
-heading() {
-  printf "\n\r \033[1m \e[33m[ $1 ]\e[0m\n"
-}
+function link_file() {
+  SRC=$1
+  DEST=$2
 
-link_file () {
-  local src=$1 dst=$2
+  if [ -f $DEST ]; then
+    mv "$DEST" "${DEST}.backup"
+  fi
 
-  # Backup
-  mv "$dst" "${dst}.backup"
-  success "Moved $dst to ${dst}.backup"
-
-  # Symlink
-  ln -s "$1" "$2"
-  success "Linked $1 to $2"
+  if ! [ -L $DEST ]; then
+    ln -ivs $SRC $DEST
+  else
+    echo "Skipping, link already exists: $DEST"
+  fi
 }
 
 # Symlink dotfiles in to ~
-install_dotfiles () {
-  heading 'Symlinking dotfiles'
+function install_dotfiles () {
+  echo 'Symlinking dotfiles'
 
   for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*')
   do
@@ -34,47 +33,52 @@ install_dotfiles () {
 }
 
 # Create a dev directory in ~
-heading 'Create a dev directory'
+echo 'Create a dev directory'
 if [ ! -d ~/dev ] ; then
   mkdir ~/dev
 fi
 
 # Get the directory this script is running in
-cd "$(dirname "$0")../"
+cd "$(dirname "$0")"
 export DOTFILES_ROOT=$(pwd -P)
-
-# Configure preferences for OS X.
-heading "Setting Mac OS X preferences"
-sudo $DOTFILES_ROOT/macos/set-defaults.sh
 
 # Install Homebrew
 if test ! $(which brew)
 then
-  heading "Installing Homebrew"
+  echo "Installing Homebrew"
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" </dev/null
 fi
 
 # Run Homebrew through the Brewfile
-heading "Installing software via Homebrew"
-echo ''
+echo "Installing software via Homebrew"
 brew bundle
 
 # Add Homebrew Zsh to shells and switch to it.
 sudo sh -c "echo "$(brew --prefix)/bin/zsh" >> /etc/shells"
 sudo chsh -s "$(brew --prefix)/bin/zsh" $USER
 
-# Install Oh My Zsh.
-heading "Installing oh-my-zsh"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
 # Symlink dotfiles in to ~
-heading "Symlinking dotfiles"
+echo "Symlinking dotfiles"
 install_dotfiles
 
 # Copy necessary files across in to ~
-heading "Copy files"
-cp -r copy/. ~/
+echo "Copy files"
+cp -r copy/home/. ~/
+
+echo "Copying fonts"
+cp -r copy/fonts/. ~/Library/fonts/
+
+echo "Installing vundle"
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 # Install Vim plugins.
-heading "Setup vim"
+echo "Setup vim"
 vim +PluginInstall +qall
+
+# Configure preferences for OS X.
+echo "Setting Mac OS X preferences"
+sudo $DOTFILES_ROOT/macos/set-defaults.sh
+
+# Install Oh My Zsh.
+echo "Installing oh-my-zsh"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
