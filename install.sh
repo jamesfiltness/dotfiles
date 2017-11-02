@@ -23,8 +23,6 @@ function link_file() {
 
 # Symlink dotfiles in to ~
 function install_dotfiles () {
-  echo 'Symlinking dotfiles'
-
   for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*')
   do
     dst="$HOME/.$(basename "${src%.*}")"
@@ -32,15 +30,15 @@ function install_dotfiles () {
   done
 }
 
-# Create a dev directory in ~
-echo 'Create a dev directory'
-if [ ! -d ~/dev ] ; then
-  mkdir ~/dev
-fi
-
 # Get the directory this script is running in
 cd "$(dirname "$0")"
 export DOTFILES_ROOT=$(pwd -P)
+
+# Create a dev directory in ~
+if [ ! -d $HOME/dev ] ; then
+  echo 'Create a dev directory'
+  mkdir $HOME/dev
+fi
 
 # Install Homebrew
 if test ! $(which brew)
@@ -57,7 +55,7 @@ brew bundle
 sudo sh -c "echo "$(brew --prefix)/bin/zsh" >> /etc/shells"
 sudo chsh -s "$(brew --prefix)/bin/zsh" $USER
 
-# Initialise the dotfiles directory as a git repo so changes can be committed
+# Initialise the dotfiles directory as a git repo so changes can be tracked
 git init --quiet
 git remote add origin git@github.com:jamesfiltness/dotfiles.git
 
@@ -71,10 +69,6 @@ cp -r fonts/. $HOME/Library/fonts/
 echo "Installing vundle"
 git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 
-# Install Vim plugins.
-echo "Setup vim"
-vim +PluginInstall +qall
-
 # Configure preferences for OS X.
 echo "Setting Mac OS X preferences"
 sudo $DOTFILES_ROOT/macos/set-defaults.sh
@@ -85,13 +79,23 @@ sudo $DOTFILES_ROOT/macos/set-defaults.sh
 echo "Installing oh-my-zsh"
 git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
 
+# First drop some placeholder files in to specified locations
+# and then symlink the actual files in
+ZSH_THEMES_DIR = $HOME/.oh-my-zsh/custom/themes
+VIM COLORS_DIR = $HOME/.vim/colors
+
+touch $ZSH_THEMES_DIR/jfiltness.zsh-theme
+touch $VIM_COLORS_DIR/jfiltness.vim
+
 echo "Symlink files in to ~"
-link $DOTFILES_ROOT/oh-my-zsh/jfiltness.zsh-theme $HOME/.oh-my-zsh/custom/themes/jfiltness.zsh-theme
-link $DOTFILES_ROOT/vim/jfiltness.vim $HOME/.vim/colors/jfiltness.vim
+link_file $DOTFILES_ROOT/oh-my-zsh/jfiltness.zsh-theme $ZSH_THEMES_DIR/jfiltness.zsh-theme
+link_file $DOTFILES_ROOT/vim/jfiltness.vim $VIM_COLORS_DIR/jfiltness.vim
+
+# Install Vim plugins.
+echo "Setup vim"
+vim +PluginInstall +qall
 
 echo "Copy iTerm color scheme to the desktop"
 git clone https://github.com/rahulpatel/oceanic-material-iterm $HOME/Desktop/oceanic-material-iterm
 
-echo "*** Don't forget to install iTerm colorscheme ***"
-
-echo "*** INSTALLATION COMPLETE ***"
+echo "*** INSTALLATION COMPLETE - REBOOT! ***"

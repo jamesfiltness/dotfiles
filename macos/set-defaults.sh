@@ -154,6 +154,9 @@ defaults write com.apple.dock wvous-bl-corner -int 4
 # Bottom right screen corner → Show windows
 defaults write com.apple.dock wvous-bl-corner -int 3
 
+# Remove all appd from Dock
+defaults write com.apple.dock persistent-apps -array
+
 #########################################################
 # Iterm
 #########################################################
