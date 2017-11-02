@@ -61,10 +61,6 @@ sudo chsh -s "$(brew --prefix)/bin/zsh" $USER
 echo "Symlinking dotfiles"
 install_dotfiles
 
-# Copy necessary files across in to ~
-echo "Copy files"
-cp -r copy/home/. ~/
-
 echo "Copying fonts"
 cp -r copy/fonts/. ~/Library/fonts/
 
@@ -79,6 +75,18 @@ vim +PluginInstall +qall
 echo "Setting Mac OS X preferences"
 sudo $DOTFILES_ROOT/macos/set-defaults.sh
 
+# Echo a message to copy necessary files across in to ~
+# This is necessary as the oh-my-zsh script exits after finishing
+# The scripts in copy/home have to be copied after oh-my-zsh has installed but not before
+# So easiest solution is to copy them manually
+# There are various open issues/prs/discussions in the oh-my-zsh community referring to this issue
+# i.e. https://github.com/robbyrussell/oh-my-zsh/pull/5893
+echo "**************************************************************"
+echo "**** RUN THIS COMMAND TO COPY NECESSARY FILES IN TO PLACE ****"
+echo "**** cp -r copy/home/. ~/ ****"
+echo "**************************************************************"
+
 # Install Oh My Zsh.
 echo "Installing oh-my-zsh"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
