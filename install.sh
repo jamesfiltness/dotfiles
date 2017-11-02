@@ -62,7 +62,7 @@ echo "Symlinking dotfiles"
 install_dotfiles
 
 echo "Copying fonts"
-cp -r copy/fonts/. $HOME/Library/fonts/
+cp -r fonts/. $HOME/Library/fonts/
 
 echo "Installing vundle"
 git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
@@ -81,8 +81,9 @@ sudo $DOTFILES_ROOT/macos/set-defaults.sh
 echo "Installing oh-my-zsh"
 git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
 
-echo "Copying files in to ~"
-cp -r copy/home/. $HOME/
+echo "Symlink files in to ~"
+link $DOTFILES_ROOT/oh-my-zsh/jfiltness.zsh-theme $HOME/.oh-my-zsh/custom/themes/jfiltness.zsh-theme
+link $DOTFILES_ROOT/vim/jfiltness.vim $HOME/.vim/colors/jfiltness.vim
 
 echo "Copy iTerm color scheme to the desktop"
 git clone https://github.com/rahulpatel/oceanic-material-iterm $HOME/Desktop/oceanic-material-iterm

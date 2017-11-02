@@ -77,7 +77,7 @@ if has('syntax') && !exists('g:syntax_on')
   syntax enable " Turn on syntax highlighting
 endif
 
-colorscheme monokai
+colorscheme jfiltness
 
 " Turn off text background colour
 hi Normal ctermbg=NONE
