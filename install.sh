@@ -75,18 +75,13 @@ vim +PluginInstall +qall
 echo "Setting Mac OS X preferences"
 sudo $DOTFILES_ROOT/macos/set-defaults.sh
 
-# Echo a message to copy necessary files across in to ~
-# This is necessary as the oh-my-zsh script exits after finishing
-# The scripts in copy/home have to be copied after oh-my-zsh has installed but not before
-# So easiest solution is to copy them manually
-# There are various open issues/prs/discussions in the oh-my-zsh community referring to this issue
-# i.e. https://github.com/robbyrussell/oh-my-zsh/pull/5893
-echo "**************************************************************"
-echo "**** RUN THIS COMMAND TO COPY NECESSARY FILES IN TO PLACE ****"
-echo "**** cp -r copy/home/. ~/ ****"
-echo "**************************************************************"
-
 # Install Oh My Zsh.
+# Don't run the manual installer as it exists the install process and doesn't
+# allow custom files to be copied in to .oh-my-zsh directory
 echo "Installing oh-my-zsh"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 
+echo "Copying files in to ~"
+cp -r copy/home/. ~/
+
+echo "*** COMPLETE ***"
