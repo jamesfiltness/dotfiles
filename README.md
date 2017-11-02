@@ -1,6 +1,6 @@
 # dotfiles
 
-My configuration for OS X. Have a look at `install.sh` for details.
+My configuration for OS X. Have a look at `install` for details.
 
 (Requires a patched font from https://nerdfonts.com for icons to work).
 

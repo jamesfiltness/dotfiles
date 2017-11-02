@@ -40,6 +40,10 @@ if [ ! -d $HOME/dev ] ; then
   mkdir $HOME/dev
 fi
 
+# Configure preferences for OS X.
+echo "Setting Mac OS X preferences"
+$DOTFILES_ROOT/macos/set-defaults
+
 # Install Homebrew
 if test ! $(which brew)
 then
@@ -56,8 +60,10 @@ sudo sh -c "echo "$(brew --prefix)/bin/zsh" >> /etc/shells"
 sudo chsh -s "$(brew --prefix)/bin/zsh" $USER
 
 # Initialise the dotfiles directory as a git repo so changes can be tracked
-git init --quiet
-git remote add origin git@github.com:jamesfiltness/dotfiles.git
+if [ ! -d .git ] ; then
+  git init --quiet
+  git remote add origin git@github.com:jamesfiltness/dotfiles.git
+fi
 
 # Symlink dotfiles in to ~
 echo "Symlinking dotfiles"
@@ -69,27 +75,14 @@ cp -r fonts/. $HOME/Library/fonts/
 echo "Installing vundle"
 git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 
-# Configure preferences for OS X.
-echo "Setting Mac OS X preferences"
-sudo $DOTFILES_ROOT/macos/set-defaults.sh
-
 # Install Oh My Zsh.
 # Don't run the manual installer as it exits the install process and doesn't
 # allow custom files to be copied in to .oh-my-zsh directory
 echo "Installing oh-my-zsh"
 git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
 
-# First drop some placeholder files in to specified locations
-# and then symlink the actual files in
-ZSH_THEMES_DIR = $HOME/.oh-my-zsh/custom/themes
-VIM COLORS_DIR = $HOME/.vim/colors
-
-touch $ZSH_THEMES_DIR/jfiltness.zsh-theme
-touch $VIM_COLORS_DIR/jfiltness.vim
-
-echo "Symlink files in to ~"
-link_file $DOTFILES_ROOT/oh-my-zsh/jfiltness.zsh-theme $ZSH_THEMES_DIR/jfiltness.zsh-theme
-link_file $DOTFILES_ROOT/vim/jfiltness.vim $VIM_COLORS_DIR/jfiltness.vim
+echo "Copy files in to ~"
+cp -r home/. $HOME/
 
 # Install Vim plugins.
 echo "Setup vim"
