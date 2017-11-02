@@ -57,6 +57,10 @@ brew bundle
 sudo sh -c "echo "$(brew --prefix)/bin/zsh" >> /etc/shells"
 sudo chsh -s "$(brew --prefix)/bin/zsh" $USER
 
+# Initialise the dotfiles directory as a git repo so changes can be committed
+git init --quiet
+git remote add origin git@github.com:jamesfiltness/dotfiles.git
+
 # Symlink dotfiles in to ~
 echo "Symlinking dotfiles"
 install_dotfiles
