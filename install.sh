@@ -62,10 +62,10 @@ echo "Symlinking dotfiles"
 install_dotfiles
 
 echo "Copying fonts"
-cp -r copy/fonts/. ~/Library/fonts/
+cp -r copy/fonts/. $HOME/Library/fonts/
 
 echo "Installing vundle"
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 
 # Install Vim plugins.
 echo "Setup vim"
@@ -76,12 +76,17 @@ echo "Setting Mac OS X preferences"
 sudo $DOTFILES_ROOT/macos/set-defaults.sh
 
 # Install Oh My Zsh.
-# Don't run the manual installer as it exists the install process and doesn't
+# Don't run the manual installer as it exits the install process and doesn't
 # allow custom files to be copied in to .oh-my-zsh directory
 echo "Installing oh-my-zsh"
-git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
 
 echo "Copying files in to ~"
-cp -r copy/home/. ~/
+cp -r copy/home/. $HOME/
 
-echo "*** COMPLETE ***"
+echo "Copy iTerm color scheme to the desktop"
+git clone https://github.com/rahulpatel/oceanic-material-iterm $HOME/Desktop/oceanic-material-iterm
+
+echo "*** Don't forget to install iTerm colorscheme ***"
+
+echo "*** INSTALLATION COMPLETE ***"
