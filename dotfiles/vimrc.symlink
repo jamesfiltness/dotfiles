@@ -79,9 +79,6 @@ endif
 
 colorscheme jfiltness
 
-" Turn off text background colour
-hi Normal ctermbg=NONE
-
 set number " Always show line numbers
 set showmode " Always display the current mode
 set cursorline " Background highlight on current line
@@ -161,16 +158,6 @@ let g:airline_theme = 'badwolf'
 " Completion settings
 set completeopt-=preview
 set complete-=i
-
-" Fugitive mappings
-nnoremap <leader>gs :<C-u>Gstatus<CR>
-nnoremap <leader>gw :<C-u>Gwrite<CR>
-nnoremap <leader>gc :<C-u>Gcommit<CR>
-nnoremap <leader>gb :<C-u>Gblame<CR>
-nnoremap <leader>gd :<C-u>Gdiff<CR>
-nnoremap <leader>gj :<C-u>Gpull<CR>
-nnoremap <leader>gk :<C-u>Gpush<CR>
-nnoremap <leader>gf :<C-u>Gfetch<CR>
 
 " NERDTree mappings
 nnoremap § :NERDTreeToggle<CR>

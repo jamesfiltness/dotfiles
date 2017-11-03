@@ -50,8 +50,6 @@ nvm use $NODE_VERSION
 # Custom aliases
 
 # grc overides for ls
-# Made possible through contributions from generous benefactors like
-# `brew install coreutils`
 if $(gls &>/dev/null)
 then
   alias l="gls -lF --color"
@@ -59,6 +57,7 @@ then
 fi
 
 # Git aliases - most frequently used commands aliased
+alias gs='git status'
 alias ga='git add'
 alias gaa='git add .'
 alias gc='git commit -m'

@@ -15,12 +15,6 @@ osascript -e 'tell application "System Preferences" to quit'
 # Keep-alive: update existing `sudo` time stamp until `.osx` has finished.
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-# Set computer name.
-sudo scutil --set ComputerName "jamesfiltness"
-sudo scutil --set HostName "jamesfiltness"
-sudo scutil --set LocalHostName "jamesfiltness"
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "jamesfiltness"
-
 #########################################################
 # General
 #########################################################
@@ -137,7 +131,7 @@ defaults write com.apple.finder WarnOnEmptyTrash -bool false
 #########################################################
 
 # Set the icon size of Dock items to 36 pixels
-defaults write com.apple.dock tilesize -int 36
+defaults write com.apple.dock tilesize -int 56
 
 # Change minimize/maximize window effect
 defaults write com.apple.dock mineffect -string "scale"
@@ -149,10 +143,10 @@ defaults write com.apple.dock minimize-to-application -bool true
 defaults write com.apple.dock autohide -bool true
 
 # Bottom left screen corner → Show desktop
-defaults write com.apple.dock wvous-bl-corner -int 4
+defaults write com.apple.dock wvous-tr-corner -int 3
 
 # Bottom right screen corner → Show windows
-defaults write com.apple.dock wvous-bl-corner -int 3
+defaults write com.apple.dock wvous-bl-corner -int 4
 
 # Remove all appd from Dock
 defaults write com.apple.dock persistent-apps -array
