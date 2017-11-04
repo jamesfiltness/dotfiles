@@ -40,6 +40,12 @@ if [ ! -d $HOME/dev ] ; then
   mkdir $HOME/dev
 fi
 
+# Create a .localrc file in  ~
+if [ ! -f $HOME/.localrc ] ; then
+  echo 'Create a .localrc file'
+  touch $HOME/.localrc
+fi
+
 # Configure preferences for OS X.
 echo "Setting Mac OS X preferences"
 $DOTFILES_ROOT/macos/set-defaults
