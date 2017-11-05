@@ -42,11 +42,6 @@ MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
 PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 MANPATH="/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
 
-# Source nvm.
-export NVM_DIR="$HOME/.nvm"
-. "$(brew --prefix nvm)/nvm.sh"
-nvm use $NODE_VERSION
-
 # Custom aliases
 
 # grc overides for ls

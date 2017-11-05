@@ -11,13 +11,8 @@ brew 'wget', args: ['--with-iri']
 brew 'zsh'
 brew 'zsh-syntax-highlighting'
 
-# Install latest versions of some OS X tools.
 brew 'vim', args: ['--override-system-vi']
-# brew 'homebrew/dupes/grep', args: ['--with-default-names']
-# brew 'homebrew/dupes/openssh'
-
 brew 'git'
-brew 'nvm'
 brew 'the_silver_searcher'
 
 cask '1password'
