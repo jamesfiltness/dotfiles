@@ -23,7 +23,8 @@ HIST_STAMPS="mm/dd/yyyy"
 COMPLETION_WAITING_DOTS="true"
 
 # Load Oh My Zsh plugins.
-plugins=(node npm brew osx sudo colorize)
+# Don't use git plugin as it overeggs aliases IMO
+plugins=(brew colorize node npm osx sudo)
 
 source $ZSH/oh-my-zsh.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

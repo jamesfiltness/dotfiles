@@ -11,17 +11,19 @@ brew 'wget', args: ['--with-iri']
 brew 'zsh'
 brew 'zsh-syntax-highlighting'
 
-brew 'vim', args: ['--override-system-vi']
 brew 'git'
+brew 'vim', args: ['--override-system-vi']
 brew 'the_silver_searcher'
 
-cask '1password'
-cask 'vlc'
+cask 'aerial'
+cask 'docker'
+cask 'charles'
+cask 'firefox'
+cask 'google-chrome'
 cask 'iterm2'
 cask 'postman'
-cask 'docker'
-cask 'whatsapp'
 cask 'sublime-text'
-cask 'google-chrome'
-cask 'firefox'
-cask 'aerial'
+cask 'spotify'
+cask 'vlc'
+cask 'whatsapp'
+cask '1password'
