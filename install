@@ -71,10 +71,6 @@ if [ ! -d .git ] ; then
   git remote add origin git@github.com:jamesfiltness/dotfiles.git
 fi
 
-# Symlink dotfiles in to ~
-echo "Symlinking dotfiles"
-install_dotfiles
-
 echo "Copying fonts"
 cp -r fonts/. $HOME/Library/fonts/
 
@@ -89,7 +85,11 @@ git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
 # Install n Node version manager and install lastest LTS
 # Nvm slows shell startup down
 echo "Install n Node version manager"
-curl -L https://git.io/n-install | bash -s -- -y lts
+curl -L https://git.io/n-install | bash -s -- -y -n lts
+
+# Symlink dotfiles in to ~
+echo "Symlinking dotfiles"
+install_dotfiles
 
 echo "Copy files in to ~"
 cp -r home/. $HOME/
