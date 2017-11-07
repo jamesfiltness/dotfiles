@@ -1,17 +1,173 @@
-set shell=/bin/bash " Currently required for vim-gitgutter to work
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" GENERAL
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Set the default encoding
+set encoding=utf-8
+
+" Sets how many lines of history VIM has to remember
+set history=500
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" map leader allows extra key combinations
+let mapleader = ","
+let g:mapleader = ","
+
+" Fast saving
+nmap <leader>w :w!<cr>
+
+" Allow mouse use if possible
+if has('mouse')
+  set mouse=a
+endif
+
+" Enable system clipboard integration on OS X
+set clipboard=unnamed
+
+" Use current file as the CWD
+set autochdir
+
+" Don't treat 0-prefixed numbers as octal
+set nrformats-=octal
+
+" Automatically detect filetypes
+if has('autocmd')
+  filetype plugin indent on " Automatically detect filetypes
+endif
+
+" Persist undo across sessions if possible
+if has('persistent_undo')
+  set undodir=~/.vim/undodir
+  set undofile
+endif
+
+" Return to last edit position when opening files
+autocmd BufReadPost *
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe 'normal! g`"' |
+  \ endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" UI
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Show line numbers
+set number
+
+" Display current mode
+set showmode
+
+" Highlight the current cursor line
+set cursorline
+
+" Always show the status line
+set laststatus=2
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+
+" Show ruler output in bottom right of status line
+set ruler
+
+" A buffer becomes hidden when it is abandoned
+set hid
+
+" Configure backspace so it acts as it should act
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+" Completion settings
+set completeopt-=preview
+set complete-=i
 
 "
-" Vundle
+" WILDMENU (CTRLP)
 "
+
+" Set command line completion (CtrlP)
+set wildmenu
+
+" Show a list on first press of Tab in wildmenu
+" and then a full tabbable menu on second Tab
+set wildmode=longest:list,full
+
+" Set things to ignore in wildmenu
+set wildignore+=*/.git/*
+set wildignore+=*DS_Store*
+set wildignore+=*node_modules*
+
+"
+" Indentation
+"
+" 2 column wide tabs
+set tabstop=2
+
+" 2 columns in insert mode
+set softtabstop=2
+
+" control how many columns text is indented with the reindent operations (<< and >>)
+set shiftwidth=2
+
+" Spaces instead of tabs
+set expandtab
+
+"
+" Scrolling
+"
+set scrolloff=8 " Start scrolling when 8 lines off the top/bottom
+set sidescrolloff=15 " Start scrolling when 15 lines off the left/right
+set sidescroll=1 " Minimal number of columns to scroll horizontally
+
+"
+" SEARCHING
+"
+
+" Search at you type
+set incsearch
+
+" Ignore case when searching
+set ignorecase
+
+" When searching try to be smart about cases
+set smartcase
+
+" Highlight search results when searching with /s
+set hlsearch
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" COLORS AND FONTS
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set t_Co=256
+
+" Enable syntax highlighting with safeguard to prevent
+" colors getting messed up when .vimrc is sourced multiple times
+if !exists("g:syntax_on")
+    syntax enable
+endif
+
+colorscheme monokai
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" PLUGINS
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 set nocompatible
-filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
 
-"
-" Plugins
-"
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -31,150 +187,17 @@ Plugin 'ekalinin/Dockerfile.vim'
 
 call vundle#end()
 
-"
-" General
-"
-if has('autocmd')
-  filetype plugin indent on " Automatically detect filetypes
-endif
-
-set autochdir " Automatically use the current file's directory as the cwd
-set autoread " Automatically read files when they change outside of Vim
-set backspace=indent,eol,start " Intuitive backspace
-set nrformats-=octal " Don't treat 0-prefixed numbers as octal
-set encoding=utf-8 " Set the default encoding
-
-" Turn off error sounds
-set noerrorbells
-set novisualbell
-
-" Allow mouse use if possible
-if has('mouse')
-  set mouse=a
-endif
-
-" Persist undo across sessions if possible
-if has('persistent_undo')
-  set undodir=~/.vim/undodir
-  set undofile
-endif
-
-" Return to last edit position when opening files
-autocmd BufReadPost *
-  \ if line("'\"") > 0 && line("'\"") <= line("$") |
-  \   exe 'normal! g`"' |
-  \ endif
-
-" Enable system clipboard integration on OS X
-set clipboard=unnamed
-
-"
-" Color scheme and appearance
-"
-set t_Co=256
-
-if has('syntax') && !exists('g:syntax_on')
-  syntax enable " Turn on syntax highlighting
-endif
-
-colorscheme jfiltness
-
-set number " Always show line numbers
-set showmode " Always display the current mode
-set cursorline " Background highlight on current line
-set laststatus=2 " Always show the status line
-set ruler " Show the line/column number of the cursor in the status line
-
-"Only show the backgroud highlight in the active buffer
-augroup CursorLine
-  au!
-  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-  au WinLeave * setlocal nocursorline
-augroup END
-
-"
-" Search/Subtitution
-"
-set showmatch " Show matching brackets
-set incsearch " Find-as-you-type search
-set hlsearch " Highlight matches
-set ignorecase " Case-insensitive search
-set smartcase " But case-sensitive if expression contains a capital letter
-
-"
-" Indentation
-"
-set autoindent " Indent at same level as previous line
-set tabstop=2 " Tabs are 2 columns wide
-set shiftwidth=2 " Reindent operators move by 2 columns
-set softtabstop=2 " Use 2 columns when Tab is pressed in insert mode
-set expandtab " Spaces instead of actual tabs
-
-"
-" Scrolling
-"
-set scrolloff=8 " Start scrolling when 8 lines off the top/bottom
-set sidescrolloff=15 " Start scrolling when 15 lines off the left/right
-set sidescroll=1 " Minimal number of columns to scroll horizontally
-
-"
-" Key mappings
-"
-let mapleader = ','
-let maplocalleader = '\\'
-
-nnoremap ; :
-
-" Viewport navigation
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-" Viewport relocation
-nnoremap <leader>h <C-w>H
-nnoremap <leader>j <C-w>J
-nnoremap <leader>k <C-w>K
-nnoremap <leader>l <C-w>L
-
-" Map Ctrl+C to escape
-inoremap <C-c> <esc>
-
-" Return clears search
-nnoremap <CR> :noh<CR>
-
-" Open .vimrc in vertical split
-nnoremap <leader>ev :vs $MYVIMRC<CR>
-
-"
-" Plugin configuration
-"
-
 " Airline settings
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'badwolf'
 
-" Completion settings
-set completeopt-=preview
-set complete-=i
-
-" NERDTree mappings
+" NERDTree settings
 nnoremap § :NERDTreeToggle<CR>
 let g:NERDTreeShowHidden = 1
 let NERDTreeIgnore = ['\.swp$']
 
-" JSX settings
-let g:jsx_ext_required = 0
-
 " CtrlP settings
-set wildmenu
-set wildignore+=*/.git/*
-set wildignore+=*.png,*.jpg,*.gif
-set wildignore+=*DS_Store*
-set wildignore+=*node_modules*
-set wildignore+=*bower_components*
-
 let g:ctrlp_cmd='CtrlP'
 let g:ctrlp_show_hidden=1
 let g:ctrlp_working_path_mode='ra'
@@ -188,3 +211,26 @@ if executable('ag')
   " Use ag with CtrlP
   let g:ctrlp_user_command='ag %s -l --nocolor -g ""'
 endif
+
+" JSX settings
+let g:jsx_ext_required = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" KEY MAPPINGS
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap ; :
+
+" Map Ctrl+C to escape
+inoremap <C-c> <esc>
+
+" Return clears search
+nnoremap <CR> :noh<CR>
+
+" Open .vimrc in vertical split
+nnoremap <leader>ev :vs $MYVIMRC<CR>
+
+" Tab to move to next buffer
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
