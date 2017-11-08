@@ -13,13 +13,6 @@ set history=500
 " Set to auto read when a file is changed from the outside
 set autoread
 
-" map leader allows extra key combinations
-let mapleader = ","
-let g:mapleader = ","
-
-" Fast saving
-nmap <leader>w :w!<cr>
-
 " Allow mouse use if possible
 if has('mouse')
   set mouse=a
@@ -223,7 +216,14 @@ let g:jsx_ext_required = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" map leader allows extra key combinations
+let mapleader = ","
+let g:mapleader = ","
+
 nnoremap ; :
+
+" Fast saving
+nmap <leader>w :w!<cr>
 
 " Map Ctrl+C to escape
 inoremap <C-c> <esc>
