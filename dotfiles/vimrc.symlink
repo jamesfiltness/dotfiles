@@ -106,6 +106,7 @@ set wildignore+=*node_modules*
 "
 " Indentation
 "
+
 " 2 column wide tabs
 set tabstop=2
 
@@ -121,6 +122,7 @@ set expandtab
 "
 " Scrolling
 "
+
 set scrolloff=8 " Start scrolling when 8 lines off the top/bottom
 set sidescrolloff=15 " Start scrolling when 15 lines off the left/right
 set sidescroll=1 " Minimal number of columns to scroll horizontally
@@ -220,6 +222,7 @@ let g:jsx_ext_required = 0
 " KEY MAPPINGS
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 nnoremap ; :
 
 " Map Ctrl+C to escape

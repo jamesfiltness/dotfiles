@@ -4,9 +4,6 @@ export ZSH=/Users/jamesfiltness/.oh-my-zsh
 # Check for updates every day instead of every 2 weeks.
 export UPDATE_ZSH_DAYS=1
 
-# Default Node version.
-export NODE_VERSION=6
-
 # Stash environment variables in ~/.localrc.
 if [[ -a ~/.localrc ]]
 then
@@ -18,9 +15,6 @@ ZSH_THEME="jfiltness"
 
 # Show timestamp in history in this format.
 HIST_STAMPS="mm/dd/yyyy"
-
-# Display completion dots.
-COMPLETION_WAITING_DOTS="true"
 
 # Load Oh My Zsh plugins.
 # Don't use git plugin as it overeggs aliases IMO
@@ -62,9 +56,6 @@ alias gp='git push'
 alias gpf='git push --force'
 alias gf='git fetch'
 alias gpp='git pull'
-
-#zsh
-alias reload!='. ~/.zshrc'
 
 # n Node version manager
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
