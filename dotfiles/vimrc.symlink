@@ -150,7 +150,7 @@ if !exists("g:syntax_on")
     syntax enable
 endif
 
-colorscheme monokai
+colorscheme jfiltness 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
