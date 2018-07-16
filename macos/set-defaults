@@ -142,12 +142,6 @@ defaults write com.apple.dock minimize-to-application -bool true
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
 
-# Top right screen corner → all open apps
-defaults write com.apple.dock wvous-tr-corner -int 2
-
-# Bottom left screen corner → Show windows
-defaults write com.apple.dock wvous-bl-corner -int 4
-
 # Remove all appd from Dock
 defaults write com.apple.dock persistent-apps -array
 

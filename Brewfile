@@ -14,7 +14,9 @@ brew 'zsh-syntax-highlighting'
 brew 'git'
 brew 'vim', args: ['--override-system-vi']
 brew 'the_silver_searcher'
+brew 'nvm'
 
+cask 'atom'
 cask 'aerial'
 cask 'docker'
 cask 'charles'
